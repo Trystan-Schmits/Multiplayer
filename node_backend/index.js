@@ -1,19 +1,31 @@
-const { Server } = require("socket.io");
+const http = require('http').createServer();
+
+const io = require('socket.io')(http,{cors: {origin: "*"}});
+
 const { v4: uuidv4 } = require('uuid');
 
-const io = new Server({ cors: { origin: "*" } });
+const PORT = 3000;
 
-io.on("connection", (socket) => {
-  const id = uuidv4()
-  socket.emit("id", id)
-  socket.on("update", (data) => {
-    console.log(data)
-    io.emit("stateUpdate", data)
+io.on('connection',(socket) => {
+  const id = uuidv4();
+  socket.emit("id",id);
+  
+  console.log("a user connected, given id: "+id);
+
+  socket.on('message',(message)=>{
+      io.emit('message',message);
   })
 
+  socket.on("update", (data) => {
+      io.emit("stateUpdate", data);
+  })
+  
   socket.on("disconnect", () => {
-    io.emit("disconnection", id)
+      console.log("a user disconnected, with id: "+id)
+      io.emit("disconnection", id);
   })
 });
 
-io.listen(3000);
+http.listen(PORT,()=>{
+  console.log("listening on port: "+String(PORT));
+});
