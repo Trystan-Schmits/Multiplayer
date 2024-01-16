@@ -124,16 +124,20 @@ export class Player extends Character{
         if (this.collisionData.touchPoints.other.id === "tube" || this.collisionData.touchPoints.other.id?.includes("character")) {
             this.isOnTube = this.collisionData.touchPoints.other.id === "tube"
             // Collision with the left side of the Tube
-            if (this.collisionData.touchPoints.other.left) {
-                this.movement.right = false;
-            }
-            // Collision with the right side of the Tube
-            if (this.collisionData.touchPoints.other.right) {
+            if (this.collisionData.touchPoints.this.left) {
                 this.movement.left = false;
             }
+            // Collision with the right side of the Tube
+            if (this.collisionData.touchPoints.this.right) {
+                this.movement.right = false;
+            }
             // Collision with the top of the player
-            if (this.collisionData.touchPoints.other.ontop) {
+            if (this.collisionData.touchPoints.this.bottom) {
                 this.movement.down = false;
+                this.x = this.collisionData.touchPoints.other.x;
+            }
+            if (this.collisionData.touchPoints.this.top) {
+                this.movement.down = true;
                 this.x = this.collisionData.touchPoints.other.x;
             }
         } else {
