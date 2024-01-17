@@ -3,20 +3,41 @@ const { v4: uuidv4 } = require('uuid');
 
 const io = new Server({ cors: { origin: "*" } });
 
-var ids = [];
-var leader;
+var groups = [];
+var maxUsers = 2; //maximum users per group
 
-function leaderFunc(id,userState){
-  if(userState == true){//user connecting
-    ids.push(id);
-    if(leader==undefined){
-      leader = id;
+class Group{
+  leader;
+  ids = [];
+  constructor(){};
+}
+
+function assignGroup(){
+  let i = 0;
+  do {
+    if (groups[i].ids.length < maxUsers){
+      return groups[i];
     }
+  }
+  while (i<groups.length);
+  var group = new Group;
+  groups.push(group);
+  return group;
+}
+
+function leaderFunc(id,userState,g){
+  if(userState == true){//user connecting
+    var group = assignGroup();
+    group.ids.push(id);
+    if(group.leader==undefined){
+      group.leader = id;
+    }
+    return group;
   } 
   else { //player disconnecting
-    ids.slice(ids.findIndex(id),1);
-    if(id == leader){
-      leader = ids[0];
+    g.ids.slice(g.ids.findIndex(id),1);
+    if(id == g.leader){
+      g.leader = g.ids[0];
     }
   }
 }
@@ -24,16 +45,19 @@ function leaderFunc(id,userState){
 io.on("connection", (socket) => {
   const id = uuidv4();
   socket.emit("id", id);
-  leaderFunc(id,true);
+  var g = leaderFunc(id,true);
+
+  socket.on("group",()=>{
+    socket.emit(g);
+  })
 
   socket.on("update", (data) => {
-    console.log(data)
-    io.emit("stateUpdate", data)
+      io.emit("stateUpdate", data);
   })
 
   socket.on("disconnect", () => {
-    leaderFunc(id,false);
-    io.emit("disconnection", id)
+    leaderFunc(id,false,g);
+    io.emit("disconnection", id);
   })
 });
 

@@ -31,6 +31,11 @@ export class GameEnv {
     static {
         this.socket.on("id", id => this.id = id)
     }
+    static group;
+    static {
+        this.socket.on("group",group => this.group = group);
+        setInterval(GameEnv.socket.emit("group"),1000);
+    }
 
     // Make the constructor private to prevent instantiation
     constructor() {
