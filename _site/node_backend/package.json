@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "socket.io": "^4.7.4",
-    "uuid": "^9.0.1"
-  }
-}
