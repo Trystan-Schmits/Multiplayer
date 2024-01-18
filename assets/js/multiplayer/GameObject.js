@@ -38,9 +38,7 @@ class GameObject {
         var jsonifiedElement = this.stringifyElement();
         if (jsonifiedElement !== this.jsonifiedElement) {
             var obj = this.jsonifyElement()
-            console.log(obj);
             this.jsonifiedElement = jsonifiedElement;
-
             // send object
             if (this.shouldBeSynced && !GameEnv.inTransition) {
                 GameEnv.socket.emit("update", obj)

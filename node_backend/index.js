@@ -3,23 +3,24 @@ const { v4: uuidv4 } = require('uuid');
 
 const io = new Server({ cors: { origin: "*" } });
 
-var groups = [];
-var maxUsers = 2; //maximum users per group
-
 class Group{
   leader;
   ids = [];
-  constructor(){};
+  constructor(){
+    this.name = uuidv4();// assign group an id
+  };
 }
 
+var groups = [new Group];
+var maxUsers = 2; //maximum users per group
+
 function assignGroup(){
-  let i = 0;
-  do {
+  console.log(groups)
+  for(let i = 0; i<groups.length;i++) {
     if (groups[i].ids.length < maxUsers){
       return groups[i];
     }
   }
-  while (i<groups.length);
   var group = new Group;
   groups.push(group);
   return group;
@@ -35,7 +36,7 @@ function leaderFunc(id,userState,g){
     return group;
   } 
   else { //player disconnecting
-    g.ids.slice(g.ids.findIndex(id),1);
+    g.ids.slice(g.ids.indexOf(id),g.ids.indexOf(id));
     if(id == g.leader){
       g.leader = g.ids[0];
     }
@@ -46,13 +47,11 @@ io.on("connection", (socket) => {
   const id = uuidv4();
   socket.emit("id", id);
   var g = leaderFunc(id,true);
-
-  socket.on("group",()=>{
-    socket.emit(g);
-  })
+  socket.join(g.name);
+  console.log("a player joined with id: "+id+" and added to group: "+g.name);
 
   socket.on("update", (data) => {
-      io.emit("stateUpdate", data);
+      io.to(g.name).emit("stateUpdate", data); //send update to all in group
   })
 
   socket.on("disconnect", () => {

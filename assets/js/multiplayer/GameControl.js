@@ -66,18 +66,17 @@ const GameControl = {
         requestAnimationFrame(this.gameLoop.bind(this));
     },
 
+
     async handleSocketMessage(data) {
         console.log("update", data)
         let updated = false
         if (data.tag === GameEnv.currentLevel.tag) {
-            if (GameEnv.group.ids.find(data.id)){
-                for (var gameObj of GameEnv.gameObjects) {
-                    updated = updated || gameObj.updateInfo(data)
-                }
-                if (!updated && data.id.includes("character")) {
-                    const obj = await GameEnv.currentLevel.addCharacter(data.id.replace("character", ""))
-                    obj.updateInfo(data)
-                }
+            for (var gameObj of GameEnv.gameObjects) {
+                updated = updated || gameObj.updateInfo(data)
+            }
+            if (!updated && data.id.includes("character")) {
+                const obj = await GameEnv.currentLevel.addCharacter(data.id.replace("character", ""))
+                obj.updateInfo(data)
             }
         }
     },
