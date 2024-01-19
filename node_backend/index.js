@@ -12,7 +12,7 @@ class Group{
 }
 
 var groups = [new Group];
-var maxUsers = 2; //maximum users per group
+var maxUsers = 5; //maximum users per group
 
 function assignGroup(){
   console.log(groups)
@@ -36,7 +36,7 @@ function leaderFunc(id,userState,g){
     return group;
   } 
   else { //player disconnecting
-    g.ids.slice(g.ids.indexOf(id),g.ids.indexOf(id));
+    g.ids.splice(g.ids.indexOf(id),1);
     if(id == g.leader){
       g.leader = g.ids[0];
     }
