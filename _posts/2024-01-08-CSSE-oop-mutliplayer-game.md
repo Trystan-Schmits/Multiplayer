@@ -8,7 +8,7 @@ image: /images/platformer/backgrounds/hills.png
 ---
 
 <style>
-    #gameBegin, #controls, #gameOver, #settings {
+    #gameBegin, #controls, #gameOver, #settings, #buttonings {
         position: relative;
         z-index: 2; /*Ensure the controls are on top*/
     }
@@ -23,6 +23,28 @@ image: /images/platformer/backgrounds/hills.png
       padding-top: 60px; /* Place content 60px from the top */
       transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
       background-color: black; 
+    }
+    #chat-box {
+      position: relative;
+      z-index: 2;
+      height: 300px;
+      overflow-y: scroll;
+      border: 3px solid #ccc;
+      border-style: double;
+      border-width: thick;
+      padding: 10px;
+    }
+    #message-input {
+      position: relative;
+      z-index: 2;
+      width: 70%;
+      padding: 8px;
+    }
+    #send-button {
+      position: relative;
+      z-index: 2;
+      padding: 8px;
+      cursor: pointer;
     }
 </style>
 
@@ -47,7 +69,17 @@ image: /images/platformer/backgrounds/hills.png
         <!-- Background controls -->
         <button id="toggleSettingsBar">Settings</button>
     </div>
+    <div id ="buttonings">
+      <button id="toggleChatElements">Toggle Chat Elements</button>
+    </div>
 </div>
+
+<!--Chat Box Button command-->
+<div id="chat-box-container">
+  <div id="chat-box"></div>
+</div>
+<input type="text" id="message-input" placeholder="Type your message...">
+<button id="send-button" onclick="sendMessage()">Send</button>
 
 
 <script type="module">
@@ -217,4 +249,38 @@ image: /images/platformer/backgrounds/hills.png
     }
     document.getElementById("toggleSettingsBar").addEventListener("click",toggleWidth);
     document.getElementById("toggleSettingsBar1").addEventListener("click",toggleWidth);
+</script>
+
+<!-- Chat system functions -->
+
+<script type= "module">
+  function sendMessage() {
+    var messageInput = document.getElementById('message-input');
+    var chatBox = document.getElementById('chat-box');
+    var message = messageInput.value;
+
+    if (message.trim() !== '') {
+      // Display the message in the chat box
+      chatBox.innerHTML += '<p><strong>You:</strong> ' + message + '</p>';
+
+      // Clear the input field
+      messageInput.value = '';
+    }
+  }
+
+  document.getElementById('send-button').addEventListener('click', sendMessage);
+
+  function toggleChatElements() {
+    var chatBox = document.getElementById('chat-box');
+    var messageInput = document.getElementById('message-input');
+    var sendButton = document.getElementById('send-button');
+
+    // Toggle visibility
+    chatBox.style.display = (chatBox.style.display === 'none' || chatBox.style.display === '') ? 'block' : 'none';
+    messageInput.style.display = (messageInput.style.display === 'none' || messageInput.style.display === '') ? 'block' : 'none';
+    sendButton.style.display = (sendButton.style.display === 'none' || sendButton.style.display === '') ? 'block' : 'none';
+  }
+
+  // Attach event listener for the new toggle button
+  document.getElementById('toggleChatElements').addEventListener('click', toggleChatElements);
 </script>
