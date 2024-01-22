@@ -54,6 +54,12 @@ io.on("connection", (socket) => {
       io.to(g.name).emit("stateUpdate", data); //send update to all in group
   })
 
+  socket.on("event_name_here", (id)=>{ //setup for multiplayer events
+      if (id == g.leader){
+        io.to(g.name).emit("event_nameStart","")
+      }
+  })
+
   socket.on("disconnect", () => {
     leaderFunc(id,false,g);
     io.emit("disconnection", id);
