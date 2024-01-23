@@ -68,6 +68,7 @@ image: /images/platformer/backgrounds/hills.png
     <div id="settings"> <!-- Controls -->
         <!-- Background controls -->
         <button id="toggleSettingsBar">Settings</button>
+        <button id="leaderboard">leaderboard</button>
     </div>
     <div id ="buttonings">
       <button id="toggleChatElements">Toggle Chat Elements</button>
@@ -290,4 +291,10 @@ image: /images/platformer/backgrounds/hills.png
 
   // Attach event listener for the new toggle button
   document.getElementById('toggleChatElements').addEventListener('click', toggleChatElements);
+
+
+    document.getElementById("leaderboard").addEventListener("click",()=>{
+      GameEnv.socket.emit("addScore",{name:prompt("Please enter your name", "Harry Potter"),score:Number(prompt("score","2000"))});
+    })
+
 </script>

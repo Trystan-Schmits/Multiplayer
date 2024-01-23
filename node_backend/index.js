@@ -3,9 +3,12 @@ const { v4: uuidv4 } = require('uuid');
 
 const io = new Server({ cors: { origin: "*" } });
 
+var globalLeaderboard = []; //{name,score}
+
 class Group{
   leader;
   ids = [];
+  leaderboard = [];
   constructor(){
     this.name = uuidv4();// assign group an id
   };
@@ -26,7 +29,7 @@ function assignGroup(){
   return group;
 }
 
-function leaderFunc(id,userState,g){
+function connectionFunc(id,userState,g){
   if(userState == true){//user connecting
     var group = assignGroup();
     group.ids.push(id);
@@ -46,7 +49,7 @@ function leaderFunc(id,userState,g){
 io.on("connection", (socket) => {
   const id = uuidv4();
   socket.emit("id", id);
-  var g = leaderFunc(id,true);
+  var g = connectionFunc(id,true);
   socket.join(g.name);
   console.log("a player joined with id: "+id+" and added to group: "+g.name);
 
@@ -54,14 +57,24 @@ io.on("connection", (socket) => {
       io.to(g.name).emit("stateUpdate", data); //send update to all in group
   })
 
-  socket.on("event_name_here", (id)=>{ //setup for multiplayer events
-      if (id == g.leader){
-        io.to(g.name).emit("event_nameStart","")
-      }
-  })
+  socket.on("addScore", (data)=>{ //setup for multiplayer events
+    data.name = data.name?data.name:id;
+    if(data.score){
+      var score = {name:data.name,score:data.score};
+      globalLeaderboard.push(score);
+      g.leaderboard.push(score);
+      io.emit("updateLeaderboard",globalLeaderboard);
+      io.to(g.name).emit("updateRoomLeaderboard",g.leaderboard);
+    }
+  });
+
+  socket.on("leaderboardUpdateRequest",()=>{
+    socket.emit("updateLeaderboard",globalLeaderboard);
+    socket.emit("updateRoomLeaderboard",g.leaderboard);
+  });
 
   socket.on("disconnect", () => {
-    leaderFunc(id,false,g);
+    connectionFunc(id,false,g);
     io.emit("disconnection", id);
   })
 });
