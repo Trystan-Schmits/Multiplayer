@@ -250,6 +250,10 @@ image: /images/platformer/backgrounds/hills.png
     }
     document.getElementById("toggleSettingsBar").addEventListener("click",toggleWidth);
     document.getElementById("toggleSettingsBar1").addEventListener("click",toggleWidth);
+
+    document.getElementById("leaderboard").addEventListener("click",()=>{
+      GameEnv.socket.emit("addScore",{name:prompt("Please enter your name", "Harry Potter"),score:Number(prompt("score","2000"))});
+    })
 </script>
 
 <!-- Chat system functions -->
@@ -291,10 +295,5 @@ image: /images/platformer/backgrounds/hills.png
 
   // Attach event listener for the new toggle button
   document.getElementById('toggleChatElements').addEventListener('click', toggleChatElements);
-
-
-    document.getElementById("leaderboard").addEventListener("click",()=>{
-      GameEnv.socket.emit("addScore",{name:prompt("Please enter your name", "Harry Potter"),score:Number(prompt("score","2000"))});
-    })
 
 </script>
