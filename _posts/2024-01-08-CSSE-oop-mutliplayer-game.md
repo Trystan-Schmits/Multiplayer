@@ -254,10 +254,17 @@ image: /images/platformer/backgrounds/hills.png
 <!-- Chat system functions -->
 
 <script type= "module">
+  const prohibitedWords = ['westview', 'pee', 'poo', 'ian', 'matthew', 'trystan', 'gavin', 'multiplayer', 'multi', 'leaderboard', 'enemies', 'gamelevels', 'interactions', 'sass', 'sassy', 'sas', '911', 'die', 'luigi', 'peach', 'bowser', 'mario'];
+
   function sendMessage() {
     var messageInput = document.getElementById('message-input');
     var chatBox = document.getElementById('chat-box');
     var message = messageInput.value;
+
+    prohibitedWords.forEach(word => {
+      const regex = new RegExp('\\b' + word + '\\b', 'gi');
+      message = message.replace(regex, 'I Love CSSE! '.repeat(word.length));
+    });
 
     if (message.trim() !== '') {
       // Display the message in the chat box
