@@ -8,7 +8,7 @@ image: /images/platformer/backgrounds/hills.png
 ---
 
 <style>
-    #gameBegin, #controls, #gameOver, #settings, #buttonings {
+    #gameBegin, #controls, #gameOver, #multiplayer, #settings, #buttonings {
         position: relative;
         z-index: 2; /*Ensure the controls are on top*/
     }
@@ -61,6 +61,9 @@ image: /images/platformer/backgrounds/hills.png
     <div id="controls"> <!-- Controls -->
         <!-- Background controls -->
         <button id="toggleCanvasEffect">Invert</button>
+    </div>
+    <div id="Multiplayer">
+        <button id="multiplayer">Multiplayer</button>
     </div>
     <div id="gameOver" hidden>
         <button id="restartGame">Restart</button>
