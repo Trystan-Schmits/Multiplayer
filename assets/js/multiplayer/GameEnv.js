@@ -29,7 +29,10 @@ export class GameEnv {
     static socket = io("wss://platformer.nighthawkcodingsociety.com"); // io(`ws://${window.location.host.split(":")[0]}:3000`);
     static id = '';
     static {
-        this.socket.on("id", id => this.id = id)
+        this.socket.on("id", id => {
+            this.id = id;
+            this.socket.off("id"); //stop listening to ids
+        })
     }
     static {
         this.socket.on("updateLeaderboard", (leaderboard) =>{console.log(leaderboard)});

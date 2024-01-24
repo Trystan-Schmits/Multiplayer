@@ -69,6 +69,7 @@ const GameControl = {
 
     async handleSocketMessage(data) {
         console.log("update", data)
+        if (data.id.replace("character", "") == GameEnv.id){return}; // do nothing if it is you
         let updated = false
         if (data.tag === GameEnv.currentLevel.tag) {
             for (var gameObj of GameEnv.gameObjects) {
