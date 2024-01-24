@@ -151,7 +151,9 @@ export class Player extends Character{
     
     // Event listener key down
     handleKeyDown(event) {
-        if (this.playerData.hasOwnProperty(event.key)) {
+        const isChatInputFocused = document.activeElement === document.getElementById('message-input');
+
+        if (!isChatInputFocused && this.playerData.hasOwnProperty(event.key)) {
             const key = event.key;
             if (!(event.key in this.pressedKeys)) {
                 this.pressedKeys[event.key] = this.playerData[key];
@@ -164,7 +166,9 @@ export class Player extends Character{
 
     // Event listener key up
     handleKeyUp(event) {
-        if (this.playerData.hasOwnProperty(event.key)) {
+        const isChatInputFocused = document.activeElement === document.getElementById('message-input');
+
+        if (!isChatInputFocused && this.playerData.hasOwnProperty(event.key)) {
             const key = event.key;
             if (event.key in this.pressedKeys) {
                 delete this.pressedKeys[event.key];

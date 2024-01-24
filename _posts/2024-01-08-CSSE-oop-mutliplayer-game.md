@@ -262,7 +262,7 @@ image: /images/platformer/backgrounds/hills.png
 <!-- Chat system functions -->
 
 <script type= "module">
-  const prohibitedWords = ['westview', 'pee', 'poo', 'ian', 'matthew', 'trystan', 'gavin', 'multiplayer', 'multi', 'leaderboard', 'enemies', 'gamelevels', 'interactions', 'sass', 'sassy', 'sas', '911', 'die', 'luigi', 'peach', 'bowser', 'mario'];
+  const prohibitedWords = ['westview', 'pee', 'poo', 'ian', 'matthew', 'trystan', 'gavin', 'multiplayer', 'multi', 'leaderboard', 'enemies', 'gamelevels', 'interactions', 'sass', 'sassy', 'sas', '911', 'die', 'luigi', 'peach', 'bowser', 'mario', 'mr.mortensen', 'mr. mortensen', 'mortensen', 'lopez', 'mr.lopez', 'mr. lopez','mister mortensen', 'mister lopez'];
 
   function sendMessage() {
     var messageInput = document.getElementById('message-input');
