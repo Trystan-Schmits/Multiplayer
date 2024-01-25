@@ -26,7 +26,8 @@ export class GameEnv {
     static isInverted = true;
 
     // socket.io object
-    static socket = io("wss://platformer.nighthawkcodingsociety.com"); // io(`ws://${window.location.host.split(":")[0]}:3000`);
+    static socket = io("wss://platformer.nighthawkcodingsociety.com");
+    //static socket = io(`ws://${window.location.host.split(":")[0]}:3000`); 
     static id = '';
     static {
         this.socket.on("id", id => {

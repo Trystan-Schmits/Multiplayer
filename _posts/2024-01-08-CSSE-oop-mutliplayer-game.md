@@ -83,7 +83,7 @@ image: /images/platformer/backgrounds/hills.png
   <div id="chat-box"></div>
 </div>
 <input type="text" id="message-input" placeholder="Type your message...">
-<button id="send-button" onclick="sendMessage()">Send</button>
+<button id="send-button">Send</button>
 
 
 <script type="module">
@@ -257,17 +257,21 @@ image: /images/platformer/backgrounds/hills.png
     document.getElementById("leaderboard").addEventListener("click",()=>{
       GameEnv.socket.emit("addScore",{name:prompt("Please enter your name", "Harry Potter"),score:Number(prompt("score","2000"))});
     })
+
+    GameEnv.socket.emit("name",prompt("Please enter your name", "Harry Potter")); //give server a name
 </script>
 
 <!-- Chat system functions -->
 
 <script type= "module">
+  import GameEnv from '{{site.baseurl}}/assets/js/multiplayer/GameEnv.js';
+
   const prohibitedWords = ['westview', 'pee', 'poo', 'ian', 'matthew', 'trystan', 'gavin', 'multiplayer', 'multi', 'leaderboard', 'enemies', 'gamelevels', 'interactions', 'sass', 'sassy', 'sas', '911', 'die', 'luigi', 'peach', 'bowser', 'mario', 'mr.mortensen', 'mr. mortensen', 'mortensen', 'lopez', 'mr.lopez', 'mr. lopez','mister mortensen', 'mister lopez'];
 
-  function sendMessage() {
+  function updateMessage(id,message,name) {
     var messageInput = document.getElementById('message-input');
+    if(!message){message = messageInput.value};
     var chatBox = document.getElementById('chat-box');
-    var message = messageInput.value;
 
     prohibitedWords.forEach(word => {
       const regex = new RegExp('\\b' + word + '\\b', 'gi');
@@ -275,15 +279,22 @@ image: /images/platformer/backgrounds/hills.png
     });
 
     if (message.trim() !== '') {
+      if(id == GameEnv.id){return} //if you from server
+      else if(!id){ //if you from client
+      GameEnv.socket.emit("message",message);
       // Display the message in the chat box
       chatBox.innerHTML += '<p><strong>You:</strong> ' + message + '</p>';
-
       // Clear the input field
       messageInput.value = '';
+      }
+      else{ //if different person
+        chatBox.innerHTML += '<p><strong>'+name+':</strong> ' + message + '</p>';
+      }
     }
   }
 
-  document.getElementById('send-button').addEventListener('click', sendMessage);
+  document.getElementById('send-button').addEventListener('click', ()=>{updateMessage(false,false)});
+  GameEnv.socket.on("updateMessage",(data)=>{updateMessage(data.id,data.message,data.name?data.name:data.id)});//from server
 
   function toggleChatElements() {
     var chatBox = document.getElementById('chat-box');

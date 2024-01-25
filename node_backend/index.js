@@ -51,10 +51,16 @@ io.on("connection", (socket) => {
   socket.emit("id", id);
   var g = connectionFunc(id,true);
   socket.join(g.name);
+  var name;//used as a display name if wanted
+
   console.log("a player joined with id: "+id+" and added to group: "+g.name);
 
   socket.on("update", (data) => {
       io.to(g.name).emit("stateUpdate", data); //send update to all in group
+  })
+
+  socket.on("name",(n)=>{ //prompt client to create a name
+    name = n;
   })
 
   socket.on("addScore", (data)=>{ //setup for multiplayer events
@@ -67,6 +73,10 @@ io.on("connection", (socket) => {
       io.to(g.name).emit("updateRoomLeaderboard",g.leaderboard);
     }
   });
+
+  socket.on("message",(d)=>{ //chat
+      io.to(g.name).emit("updateMessage",{message:d,id:id,name:name});
+  })
 
   socket.on("leaderboardUpdateRequest",()=>{
     socket.emit("updateLeaderboard",globalLeaderboard);
