@@ -208,6 +208,25 @@ image: /images/platformer/backgrounds/hills.png
       return true;
     }
 
+    function Multiplayer() {
+      var chatElem = document.getElementById("toggleChatElements");
+
+      var chatBox = document.getElementById('chat-box');
+      var messageInput = document.getElementById('message-input');
+      var sendButton = document.getElementById('send-button');
+
+      // Toggles "toggleChatElement" button
+      chatElem.style.display = (chatElem.style.display === 'none' || chatElem.style.display === '') ? 'block' : 'none';
+
+      // Toggles "toggleChatElement" ids properties
+      chatBox.style.display = (chatBox.style.display === 'none' || chatBox.style.display === '') ? 'block' : 'none';
+      messageInput.style.display = (messageInput.style.display === 'none' || messageInput.style.display === '') ? 'block' : 'none';
+      sendButton.style.display = (sendButton.style.display === 'none' || sendButton.style.display === '') ? 'block' : 'none';
+
+    }
+
+    document.getElementById('Multiplayer').addEventListener('click', Multiplayer);
+
     /*  ==========================================
      *  ========== Game Level setup ==============
      *  ==========================================
@@ -266,7 +285,8 @@ image: /images/platformer/backgrounds/hills.png
 <script type= "module">
   import GameEnv from '{{site.baseurl}}/assets/js/multiplayer/GameEnv.js';
 
-  const prohibitedWords = ['westview', 'pee', 'poo', 'ian', 'matthew', 'trystan', 'gavin', 'multiplayer', 'multi', 'leaderboard', 'enemies', 'gamelevels', 'interactions', 'sass', 'sassy', 'sas', '911', 'die', 'luigi', 'peach', 'bowser', 'mario', 'mr.mortensen', 'mr. mortensen', 'mortensen', 'lopez', 'mr.lopez', 'mr. lopez','mister mortensen', 'mister lopez'];
+  // puts a constraint on certain words
+  const prohibitedWords = ['westview', 'pee', 'poo', 'ian', 'matthew', 'trystan', 'gavin', 'multiplayer', 'multi', 'leaderboard', 'enemies', 'gamelevels', 'interactions', 'sass', 'sassy', 'sas', '911', 'die', 'luigi', 'peach', 'bowser', 'mario', 'mr.mortensen', 'mr. mortensen', 'mortensen', 'lopez', 'mr.lopez', 'mr. lopez','mister mortensen', 'mister lopez', 'aws', 'amazonwebservices', 'amazon', 'amazonweb'];
 
   function updateMessage(id,message,name) {
     var messageInput = document.getElementById('message-input');
