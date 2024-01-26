@@ -286,7 +286,7 @@ image: /images/platformer/backgrounds/hills.png
   import GameEnv from '{{site.baseurl}}/assets/js/multiplayer/GameEnv.js';
 
   // puts a constraint on certain words
-  const prohibitedWords = ['westview', 'pee', 'poo', 'ian', 'matthew', 'trystan', 'gavin', 'multiplayer', 'multi', 'leaderboard', 'enemies', 'gamelevels', 'interactions', 'sass', 'sassy', 'sas', '911', 'die', 'luigi', 'peach', 'bowser', 'mario', 'mr.mortensen', 'mr. mortensen', 'mortensen', 'lopez', 'mr.lopez', 'mr. lopez','mister mortensen', 'mister lopez', 'aws', 'amazonwebservices', 'amazon', 'amazonweb'];
+  const prohibitedWords = ['westview', 'pee', 'poo', 'multiplayer', 'multi', 'leaderboard', 'enemies', 'gamelevels', 'interactions', 'sass', 'sassy', 'sas', '911', 'die', 'luigi', 'peach', 'bowser', 'mario', 'mr.mortensen', 'mr. mortensen', 'mortensen', 'lopez', 'mr.lopez', 'mr. lopez','mister mortensen', 'mister lopez', 'aws', 'amazonwebservices', 'amazon', 'amazonweb'];
 
   function updateMessage(id,message,name) {
     var messageInput = document.getElementById('message-input');
