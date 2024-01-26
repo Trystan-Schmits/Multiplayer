@@ -75,7 +75,7 @@ io.on("connection", (socket) => {
   });
 
   socket.on("message",(d)=>{ //chat
-      io.to(g.name).emit("updateMessage",{message:d,id:id,name:name});
+      socket.to(g.name).emit("updateMessage",{message:d,id:id,name:name});
   })
 
   socket.on("leaderboardUpdateRequest",()=>{
