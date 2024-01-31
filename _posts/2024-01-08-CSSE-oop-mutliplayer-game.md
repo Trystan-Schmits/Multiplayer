@@ -316,6 +316,21 @@ image: /images/platformer/backgrounds/hills.png
   document.getElementById('send-button').addEventListener('click', ()=>{updateMessage(false,false)});
   GameEnv.socket.on("updateMessage",(data)=>{updateMessage(data.id,data.message,data.name?data.name:data.id)});//from server
 
+  function (event) {
+    var messageInput = document.getElementById('message-input');
+    var chatBox = document.getElementById('chat-box');
+    var message = messageInput.value;
+
+    if (event.key === 'Enter') {
+      event.preventDefault(); // Prevent the default behavior of the Enter key (form submission)
+      sendMessage(); // Call the sendMessage function when Enter key is pressed
+    }
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      messageInput.value = '';
+    }
+  };
+
   function toggleChatElements() {
     var chatBox = document.getElementById('chat-box');
     var messageInput = document.getElementById('message-input');
