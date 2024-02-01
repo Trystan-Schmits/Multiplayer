@@ -118,10 +118,13 @@ io.on("connection", (socket) => {
    */
   socket.on("event_name_here", (id) => {
     if (id === g.leader) {
-      io.to(g.name).emit("event_nameStart", "");
+      socket.to(g.name).emit("event_nameStart", "");
     }
   });
 
+  socket.on("message",(message)=>{
+      socket.broadcast.emit("onMessage",{message:message,id:id});
+  })
   /**
    * Listen for "disconnect" events and handle user disconnections.
    * @event
