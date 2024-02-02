@@ -20,6 +20,8 @@ class Group {
    * Create a group with a unique ID.
    * @constructor
    */
+  //  Creates group "Leader"
+  //  Allows any group ID
   leader;
   ids = [];
   constructor() {
@@ -106,8 +108,10 @@ io.on("connection", (socket) => {
    * @param {any} data - The update data.
    */
   socket.on("update", (data) => {
+    // Logs the socket's ID
     console.log("fired for:" +id);
     data.id = id;
+    // Broadcasts to all clients within a room
     socket.to(g.name).emit("stateUpdate", data);
   });
 
@@ -121,7 +125,11 @@ io.on("connection", (socket) => {
       socket.to(g.name).emit("event_nameStart", "");
     }
   });
-
+/**
+ * Sends message to all connected users except for the sender
+ * @event
+ * @param {any} message - The message sent by the player
+ */
   socket.on("message",(message)=>{
       socket.broadcast.emit("onMessage",{message:message,id:id});
   })
