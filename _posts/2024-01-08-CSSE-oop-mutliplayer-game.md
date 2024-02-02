@@ -9,8 +9,12 @@ image: /images/platformer/backgrounds/hills.png
 
 <style>
     #gameBegin, #controls, #gameOver, #multiplayer, #settings, #buttonings {
-        position: relative;
-        z-index: 2; /*Ensure the controls are on top*/
+      position: relative;
+      z-index: 2; /*Ensure the controls are on top*/
+      border-left: 10px double black;
+      font-family: "Times New Roman", Times, serif;
+      font-weight: bold;
+      color: white;   
     }
     .sidenav {
       position: fixed;
