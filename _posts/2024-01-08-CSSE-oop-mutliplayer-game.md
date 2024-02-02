@@ -37,12 +37,15 @@ image: /images/platformer/backgrounds/hills.png
       border-style: double;
       border-width: thick;
       padding: 10px;
+      background-color: black;
     }
     #message-input {
       position: relative;
       z-index: 2;
       width: 70%;
       padding: 8px;
+      background-color: aqua;
+      background-clip: padding-box;
     }
     #send-button {
       position: relative;
