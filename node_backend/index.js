@@ -101,6 +101,7 @@ io.on("connection", (socket) => {
   var g = connectionFunc(id, true);
   socket.join(g.name);
   console.log("a player joined with id: " + id + " and added to group: " + g.name);
+  var name = "";
 
   /**
    * Listen for "update" events and broadcast updates to all users in the group.
@@ -131,7 +132,17 @@ io.on("connection", (socket) => {
  * @param {any} message - The message sent by the player
  */
   socket.on("message",(message)=>{
-      socket.broadcast.emit("onMessage",{message:message,id:id});
+      socket.broadcast.emit("onMessage",{message:message,id:id,name:name});
+  })
+
+/**
+ * Sets the name
+ * @event
+ * @param {any} name - The name sent by the user
+ */
+
+  socket.on("name",(n)=>{
+    name = n;
   })
   /**
    * Listen for "disconnect" events and handle user disconnections.
