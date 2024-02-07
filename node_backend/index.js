@@ -117,6 +117,16 @@ io.on("connection", (socket) => {
   });
 
   /**
+   * Listen for "update" events and broadcast updates to all users in the group.
+   * @event
+   * @param {any} data - The update data.
+   */
+  socket.on("leaderboard", (data) => {
+    // Broadcasts to all clients within a room
+    socket.to(g.name).emit("leaderboardUpdate", {time:data,UserID:name});
+  });
+
+  /**
    * Listen for "event_name_here" events and start the event for the group leader.
    * @event
    * @param {string} id - The sender's ID.
