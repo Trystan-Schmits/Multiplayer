@@ -123,7 +123,7 @@ io.on("connection", (socket) => {
    */
   socket.on("leaderboard", (data) => {
     // Broadcasts to all clients within a room
-    socket.to(g.name).emit("leaderboardUpdate", {time:data,UserID:name});
+    socket.to(g.name).emit("leaderboardUpdate", {time:data,userID:name});
   });
 
   /**
