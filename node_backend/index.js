@@ -156,7 +156,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("checkPlayers", () => {
-    io.to(g.name).emit(g.ids.length);
+    io.to(g.name).emit("playerCount",g.ids.length);
   });
 
   /**
