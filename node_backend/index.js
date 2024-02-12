@@ -154,6 +154,11 @@ io.on("connection", (socket) => {
   socket.on("name",(n)=>{
     name = n;
   })
+
+  socket.on("checkPlayers", () => {
+    socket.emit(g.ids.length);
+  });
+
   /**
    * Listen for "disconnect" events and handle user disconnections.
    * @event
