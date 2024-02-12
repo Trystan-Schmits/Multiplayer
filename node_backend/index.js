@@ -100,7 +100,7 @@ io.on("connection", (socket) => {
   socket.emit("id", id);
   var g = connectionFunc(id, true); //assign group
   socket.join(g.name);//join room
-  io.to(g.name).emit("playerCount",g.ids.length);//update player count
+  io.in(g.name).emit("playerCount",g.ids.length);//update player count
   console.log("a player joined with id: " + id + " and added to group: " + g.name);
   var name = "";
 
