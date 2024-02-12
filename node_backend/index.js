@@ -96,10 +96,11 @@ io.on("connection", (socket) => {
    * The unique ID of the connected socket.
    * @type {string}
    */
-  const id = uuidv4();
+  const id = uuidv4();// assign id
   socket.emit("id", id);
-  var g = connectionFunc(id, true);
-  socket.join(g.name);
+  var g = connectionFunc(id, true); //assign group
+  socket.join(g.name);//join room
+  io.to(g.name).emit("playerCount",g.ids.length);//update player count
   console.log("a player joined with id: " + id + " and added to group: " + g.name);
   var name = "";
 
