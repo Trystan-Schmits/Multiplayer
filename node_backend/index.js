@@ -43,7 +43,7 @@ var groups = [new Group];
  * Maximum number of users per group.
  * @type {number}
  */
-var maxUsers = 5;
+var maxUsers = 10;
 
 /**
  * Assign a user to an existing group or create a new group.
