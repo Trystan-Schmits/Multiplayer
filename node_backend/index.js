@@ -113,6 +113,7 @@ io.on("connection", (socket) => {
     // Logs the socket's ID
     console.log("fired for:" +id);
     data.id = id;
+    data.name = name;
     // Broadcasts to all clients within a room
     socket.to(g.name).emit("stateUpdate", data);
   });
